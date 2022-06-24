@@ -1,4 +1,4 @@
-package com.example.collection_report
+package com.jklorenzo.collection_report
 
 import io.flutter.embedding.android.FlutterActivity
 
