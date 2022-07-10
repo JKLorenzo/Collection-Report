@@ -1,4 +1,5 @@
 import 'package:collection_report/utils/session.dart';
+import 'package:collection_report/views/collection_view.dart';
 import 'package:flutter/material.dart';
 
 class CollectorView extends StatefulWidget {
@@ -57,7 +58,14 @@ class _CollectorViewState extends State<CollectorView> {
               itemBuilder: (context, index) {
                 return GestureDetector(
                   onTap: () {
-                    //
+                    final collector = collectors[index];
+                    final collection = collector.monthly;
+
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => CollectionView(
+                        collection: collection,
+                      ),
+                    ));
                   },
                   child: Card(
                     elevation: 10,
