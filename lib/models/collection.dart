@@ -1,18 +1,30 @@
 class Collection {
   String name;
-  Map<String, num> data;
-  List<num> addition;
+  late Map<String, num> data;
+  late List<num> addition;
 
-  Collection(this.name, this.data, this.addition);
+  Collection(this.name, {Map<String, num>? data, List<num>? addition}) {
+    Map<String, num> emptyData = {};
+    for (var i = 1; i <= 31; i++) {
+      emptyData.putIfAbsent('$i', () => 0);
+    }
+
+    this.data = data ?? emptyData;
+    this.addition = addition ?? [];
+  }
+
+  factory Collection.template() {
+    return Collection('template');
+  }
 
   factory Collection.fromJson(String name, Map<String, dynamic> data) {
     final _data = Map<String, num>.from(data['data']);
     final _addition = List<num>.from(data['addition']);
 
-    return Collection(name, _data, _addition);
+    return Collection(name, data: _data, addition: _addition);
   }
 
   Map<String, dynamic> toJson() {
-    return ({'data': data, 'addition': addition});
+    return {'data': data, 'addition': addition};
   }
 }
