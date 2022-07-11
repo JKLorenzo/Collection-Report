@@ -15,19 +15,6 @@ class Collector {
     daily = Collection.fromJson('$name (Daily)', data['daily']);
   }
 
-  num get collection {
-    return monthly.total + daily.total;
-  }
-
-  Map<String, dynamic> exportNew() {
-    return {
-      'name': name,
-      'position': position,
-      'monthly': Collection.template().toJson(),
-      'daily': Collection.template().toJson()
-    };
-  }
-
   Widget cardView() {
     return Card(
       elevation: 5,
@@ -63,7 +50,7 @@ class Collector {
                               style: TextStyle(fontWeight: FontWeight.bold),
                             ),
                             const SizedBox(height: 5),
-                            Text('${monthly.total}'),
+                            Text('${monthly.total()}'),
                           ],
                         ),
                         const SizedBox(width: 10),
@@ -74,7 +61,7 @@ class Collector {
                               style: TextStyle(fontWeight: FontWeight.bold),
                             ),
                             const SizedBox(height: 5),
-                            Text('${daily.total}'),
+                            Text('${daily.total()}'),
                           ],
                         )
                       ],
@@ -87,5 +74,25 @@ class Collector {
         ],
       ),
     );
+  }
+
+  Collector clearCollections() {
+    monthly.clear();
+    daily.clear();
+
+    return this;
+  }
+
+  num totalCollection() {
+    return monthly.total() + daily.total();
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'name': name,
+      'position': position,
+      'monthly': monthly.toJson(),
+      'daily': daily.toJson()
+    };
   }
 }

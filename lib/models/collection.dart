@@ -13,14 +13,6 @@ class Collection {
     this.addition = addition ?? [];
   }
 
-  num get total {
-    var total = data.values.reduce((value, element) => element + value);
-    if (addition.isNotEmpty) {
-      total += addition.reduce((value, element) => element + value);
-    }
-    return total;
-  }
-
   factory Collection.template() {
     return Collection('template');
   }
@@ -30,6 +22,21 @@ class Collection {
     final _addition = List<num>.from(data['addition']);
 
     return Collection(name, data: _data, addition: _addition);
+  }
+
+  void clear() {
+    for (var i = 1; i <= 31; i++) {
+      data.update('$i', (value) => 0);
+    }
+    addition = [];
+  }
+
+  num total() {
+    var total = data.values.reduce((value, element) => element + value);
+    if (addition.isNotEmpty) {
+      total += addition.reduce((value, element) => element + value);
+    }
+    return total;
   }
 
   Map<String, dynamic> toJson() {

@@ -34,7 +34,7 @@ class _CollectorViewState extends State<CollectorView> {
           if (isDone) {
             collectors = Session.collectors;
 
-            final collections = collectors.map((e) => e.collection);
+            final collections = collectors.map((e) => e.totalCollection());
             if (collections.isNotEmpty) {
               total = collections.reduce((value, element) => element + value);
             }
