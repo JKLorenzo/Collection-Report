@@ -13,6 +13,14 @@ class Collection {
     this.addition = addition ?? [];
   }
 
+  num get total {
+    var total = data.values.reduce((value, element) => element + value);
+    if (addition.isNotEmpty) {
+      total += addition.reduce((value, element) => element + value);
+    }
+    return total;
+  }
+
   factory Collection.template() {
     return Collection('template');
   }
