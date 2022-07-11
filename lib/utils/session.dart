@@ -71,6 +71,7 @@ class Session {
     }
 
     _collectors = data.docs.map((e) => Collector(e.id, e.data())).toList();
+    _collectors.sort((a, b) => (a.position + 1) - (b.position + 1));
   }
 
   static void next() {
