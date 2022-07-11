@@ -14,6 +14,10 @@ class Collector {
     daily = Collection.fromJson('$name (Daily)', data['daily']);
   }
 
+  num get collection {
+    return monthly.total + daily.total;
+  }
+
   Map<String, dynamic> exportNew() {
     return {
       'name': name,
