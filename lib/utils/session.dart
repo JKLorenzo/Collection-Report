@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:collection_report/models/collector.dart';
 import 'package:collection_report/utils/period.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 late Period _period;
@@ -42,6 +43,14 @@ class Session {
     _period = Period(month, year);
 
     _collectors = [];
+
+    Connectivity().onConnectivityChanged.listen((result) {
+      if (result == ConnectivityResult.none) {
+        FirebaseFirestore.instance.disableNetwork();
+      } else {
+        FirebaseFirestore.instance.enableNetwork();
+      }
+    });
   }
 
   static Future<void> load() async {
@@ -54,7 +63,7 @@ class Session {
       if (data.docs.isEmpty) {
         // Import collectors from previous period
         for (final collector in collectors) {
-          await FirebaseFirestore.instance.collection(id).add(collector.info());
+          FirebaseFirestore.instance.collection(id).add(collector.info());
         }
       }
 
