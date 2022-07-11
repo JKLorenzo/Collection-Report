@@ -9,12 +9,14 @@ class Collector {
   Collector(this.id, Map<String, dynamic> data) {
     name = data['name'];
     monthly = Collection.fromJson('$name (Monthly)', data['monthly']);
-      daily = Collection.fromJson('$name (Daily)', data['daily']);
+    daily = Collection.fromJson('$name (Daily)', data['daily']);
   }
 
-  Map<String, dynamic> info() {
+  Map<String, dynamic> exportNew() {
     return {
       'name': name,
+      'monthly': Collection.template().toJson(),
+      'daily': Collection.template().toJson()
     };
   }
 }

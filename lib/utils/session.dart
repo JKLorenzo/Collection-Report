@@ -63,7 +63,7 @@ class Session {
       if (data.docs.isEmpty) {
         // Import collectors from previous period
         for (final collector in collectors) {
-          FirebaseFirestore.instance.collection(id).add(collector.info());
+          FirebaseFirestore.instance.collection(id).add(collector.exportNew());
         }
       }
 
