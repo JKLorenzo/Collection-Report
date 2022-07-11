@@ -57,20 +57,24 @@ class Session {
     final id = _period.asId();
     var data = await FirebaseFirestore.instance.collection(id).get();
 
-    if (_isNext) {
-      _isNext = false;
+    if (data.docs.isEmpty && _isNext) {
+      // Import collectors from previous period
 
-      if (data.docs.isEmpty) {
-        // Import collectors from previous period
-        for (final collector in collectors) {
-          FirebaseFirestore.instance.collection(id).add(collector.exportNew());
-        }
+      _collectors = collectors
+          .map((e) => Collector(e.id, e.clearCollections().toJson()))
+          .toList();
+
+      for (final collector in collectors) {
+        FirebaseFirestore.instance
+            .collection(id)
+            .doc(collector.id)
+            .set(collector.toJson());
       }
-
-      data = await FirebaseFirestore.instance.collection(id).get();
+    } else {
+      _collectors = data.docs.map((e) => Collector(e.id, e.data())).toList();
     }
 
-    _collectors = data.docs.map((e) => Collector(e.id, e.data())).toList();
+    _isNext = false;
     _collectors.sort((a, b) => (a.position + 1) - (b.position + 1));
   }
 
