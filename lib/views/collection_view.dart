@@ -27,12 +27,18 @@ class _CollectionViewState extends State<CollectionView> {
           index += 1;
 
           if (index == 32) {
+            final addition = collection.addition.isNotEmpty
+                ? collection.addition.reduce((
+                    value,
+                    element,
+                  ) =>
+                    value + element)
+                : 0;
+
             return Card(
               child: ListTile(
                 title: const Text('Addition'),
-                subtitle: Text(
-                  '${collection.addition.reduce((value, element) => value + element)}',
-                ),
+                subtitle: Text('$addition'),
               ),
             );
           }
