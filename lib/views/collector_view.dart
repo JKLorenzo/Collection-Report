@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:collection_report/models/collector.dart';
 import 'package:collection_report/utils/session.dart';
 import 'package:collection_report/views/collection_view.dart';
@@ -59,13 +61,28 @@ class _CollectorViewState extends State<CollectorView> {
                             });
                           }
                         },
-                        child: ListView.builder(
+                        child: ReorderableListView.builder(
                           itemCount: collectors.length,
+                          onReorder: (oldIndex, newIndex) {
+                            if (newIndex > oldIndex) newIndex -= 1;
+                            final start = min(oldIndex, newIndex);
+                            final end = max(oldIndex, newIndex);
+
+                            setState(() {
+                              final task = collectors.removeAt(oldIndex);
+                              collectors.insert(newIndex, task);
+
+                              for (int i = start; i <= end; i++) {
+                                collectors[i].updatePosition(i);
+                              }
+                            });
+                          },
                           itemBuilder: (context, index) {
                             final collector = collectors[index];
                             final collection = collector.monthly;
 
                             return GestureDetector(
+                              key: ValueKey(collector),
                               onTap: () {
                                 Navigator.of(context).push(
                                   MaterialPageRoute(

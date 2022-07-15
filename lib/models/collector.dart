@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:collection_report/models/collection.dart';
+import 'package:collection_report/utils/session.dart';
 import 'package:flutter/material.dart';
 
 class Collector {
@@ -13,6 +15,15 @@ class Collector {
     position = data['position'];
     monthly = Collection.fromJson('$name (Monthly)', data['monthly']);
     daily = Collection.fromJson('$name (Daily)', data['daily']);
+  }
+
+  Future<void> updatePosition(int position) async {
+    this.position = position;
+
+    await FirebaseFirestore.instance
+        .collection(Session.period.asId())
+        .doc(id)
+        .update({'position': position});
   }
 
   Widget cardView() {
@@ -44,6 +55,7 @@ class Collector {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             const Text(
                               'Monthly',
@@ -55,6 +67,7 @@ class Collector {
                         ),
                         const SizedBox(width: 10),
                         Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             const Text(
                               'Daily',
