@@ -57,10 +57,7 @@ class Collector {
               padding: const EdgeInsets.all(5),
               child: Row(
                 children: [
-                  SizedBox(
-                    width: 120,
-                    child: Align(
-                      alignment: Alignment.centerLeft,
+                  Expanded(
                       child: Text(
                         name,
                         style: const TextStyle(
@@ -69,9 +66,7 @@ class Collector {
                         ),
                       ),
                     ),
-                  ),
-                  Expanded(
-                    child: Row(
+                  Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         Column(
@@ -85,7 +80,7 @@ class Collector {
                             Text('${monthly.total()}'),
                           ],
                         ),
-                        const SizedBox(width: 10),
+                      const SizedBox(width: 20),
                         Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -96,9 +91,8 @@ class Collector {
                             const SizedBox(height: 5),
                             Text('${daily.total()}'),
                           ],
-                        )
+                      ),
                       ],
-                    ),
                   ),
                 ],
               ),
