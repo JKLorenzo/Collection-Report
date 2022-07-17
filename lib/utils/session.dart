@@ -85,6 +85,7 @@ class Session {
 
     await preferences.setInt('month', _period.month);
     await preferences.setInt('year', _period.year);
+    await load();
   }
 
   static Future<void> back() async {
@@ -92,5 +93,6 @@ class Session {
 
     await preferences.setInt('month', _period.month);
     await preferences.setInt('year', _period.year);
+    await load();
   }
 }
