@@ -94,9 +94,9 @@ class _CollectorViewState extends State<CollectorView> {
                               collectors.insert(newIndex, task);
                             });
 
-                              for (int i = start; i <= end; i++) {
-                                collectors[i].updatePosition(i);
-                              }
+                            for (int i = start; i <= end; i++) {
+                              collectors[i].updatePosition(i);
+                            }
                           },
                           itemBuilder: (context, index) {
                             final collector = collectors[index];
@@ -115,7 +115,21 @@ class _CollectorViewState extends State<CollectorView> {
                               },
                               child: Padding(
                                 padding: const EdgeInsets.all(5),
-                                child: collector.cardView(),
+                                child: collector.cardView(
+                                  context,
+                                  onDelete: () {
+                                    setState(() {
+                                      collectors.removeAt(index);
+                                    });
+
+                                    final start = min(index, collectors.length);
+                                    final end = max(index, collectors.length);
+
+                                    for (int i = start; i <= end; i++) {
+                                      collectors[i].updatePosition(i);
+                                    }
+                                  },
+                                ),
                               ),
                             );
                           },

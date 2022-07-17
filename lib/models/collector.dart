@@ -46,7 +46,17 @@ class Collector {
         .update({'position': position});
   }
 
-  Widget cardView() {
+  Future<void> delete() {
+    return FirebaseFirestore.instance
+        .collection(Session.period.asId())
+        .doc(id)
+        .delete();
+  }
+
+  Widget cardView(
+    BuildContext context, {
+    required void Function() onDelete,
+  }) {
     return Card(
       elevation: 5,
       child: Row(
@@ -58,41 +68,61 @@ class Collector {
               child: Row(
                 children: [
                   Expanded(
-                      child: Text(
-                        name,
-                        style: const TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
+                    child: Text(
+                      name,
+                      style: const TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
+                  ),
                   Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Text(
-                              'Monthly',
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                            const SizedBox(height: 5),
-                            Text('${monthly.total()}'),
-                          ],
-                        ),
-                      const SizedBox(width: 20),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Text(
-                              'Daily',
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                            const SizedBox(height: 5),
-                            Text('${daily.total()}'),
-                          ],
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Text(
+                            'Monthly',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          const SizedBox(height: 5),
+                          Text('${monthly.total()}'),
+                        ],
                       ),
-                      ],
+                      const SizedBox(width: 20),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Text(
+                            'Daily',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          const SizedBox(height: 5),
+                          Text('${daily.total()}'),
+                        ],
+                      ),
+                      PopupMenuButton(
+                        onSelected: (value) {
+                          if (value == 'delete') {
+                            delete();
+                            onDelete();
+                          }
+                        },
+                        itemBuilder: (context) => [
+                          PopupMenuItem(
+                            value: 'delete',
+                            child: Row(
+                              children: const [
+                                Icon(Icons.delete_forever, color: Colors.black),
+                                SizedBox(width: 15),
+                                Text('Delete'),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
                 ],
               ),
