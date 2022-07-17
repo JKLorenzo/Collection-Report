@@ -1,10 +1,9 @@
 import 'dart:math';
 
+import 'package:collection_report/modals/collector_create_modal.dart';
 import 'package:collection_report/modals/collector_info_modal.dart';
 import 'package:collection_report/models/collector.dart';
 import 'package:collection_report/utils/session.dart';
-import 'package:collection_report/views/new_collector_view.dart';
-
 import 'package:flutter/material.dart';
 
 class CollectorView extends StatefulWidget {
@@ -28,10 +27,9 @@ class _CollectorViewState extends State<CollectorView> {
         actions: [
           IconButton(
             onPressed: () async {
-              final result = await Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => const NewCollectorView(),
-                ),
+              final result = await showDialog(
+                context: context,
+                builder: (_) => const CollectorCreateModal(),
               );
 
               if (result == true) {
