@@ -73,11 +73,11 @@ class _CollectorViewState extends State<CollectorView> {
 
                           if (velocity > sensitivity) {
                             setState(() {
-                              Session.back();
+                              loadSession = Session.back();
                             });
                           } else if (velocity < -sensitivity) {
                             setState(() {
-                              Session.next();
+                              loadSession = Session.next();
                             });
                           }
                         },
