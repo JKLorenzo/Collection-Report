@@ -91,12 +91,12 @@ class Collector {
                     child: Row(
                       children: [
                         Text(
-                      name,
-                      style: const TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
+                          name,
+                          style: const TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                         if (rank().isNotEmpty) Text(' ${rank()}')
                       ],
                     ),
@@ -108,23 +108,11 @@ class Collector {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           const Text(
-                            'Monthly',
+                            'Total',
                             style: TextStyle(fontWeight: FontWeight.bold),
                           ),
                           const SizedBox(height: 5),
-                          Text('${monthly.total()}'),
-                        ],
-                      ),
-                      const SizedBox(width: 20),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Text(
-                            'Daily',
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                          const SizedBox(height: 5),
-                          Text('${daily.total()}'),
+                          Text('${totalCollection()}'),
                         ],
                       ),
                       PopupMenuButton(
