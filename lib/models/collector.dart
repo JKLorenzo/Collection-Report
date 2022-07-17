@@ -5,16 +5,20 @@ import 'package:flutter/material.dart';
 
 class Collector {
   String id;
-  late String name;
-  late int position;
+  String name;
+  int position;
   late Collection monthly;
   late Collection daily;
 
-  Collector(this.id, Map<String, dynamic> data) {
-    name = data['name'];
-    position = data['position'];
-    monthly = Collection.fromJson('$name (Monthly)', data['monthly']);
-    daily = Collection.fromJson('$name (Daily)', data['daily']);
+  Collector(
+    this.id,
+    this.name,
+    this.position, {
+    Collection? monthly,
+    Collection? daily,
+  }) {
+    this.monthly = monthly ?? Collection.template();
+    this.daily = daily ?? Collection.template();
   }
 
   Future<void> updatePosition(int position) async {
