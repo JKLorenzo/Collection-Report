@@ -79,12 +79,18 @@ class Session {
     _collectors.sort((a, b) => (a.position + 1) - (b.position + 1));
   }
 
-  static void next() {
+  static Future<void> next() async {
     _period.nextMonth();
     _isNext = true;
+
+    await preferences.setInt('month', _period.month);
+    await preferences.setInt('year', _period.year);
   }
 
-  static void back() {
+  static Future<void> back() async {
     _period.prevMonth();
+
+    await preferences.setInt('month', _period.month);
+    await preferences.setInt('year', _period.year);
   }
 }
