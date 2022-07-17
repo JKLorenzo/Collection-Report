@@ -23,6 +23,7 @@ class _CollectorViewState extends State<CollectorView> {
 
     return Scaffold(
       appBar: AppBar(
+        elevation: 5,
         actions: [
           IconButton(
             onPressed: () async {
