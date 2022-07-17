@@ -21,6 +21,13 @@ class Collector {
     this.daily = daily ?? Collection.template();
   }
 
+  static Future<void> create(String name) async {
+    final collector = Collector('', name, Session.collectors.length);
+    await FirebaseFirestore.instance
+        .collection(Session.period.asId())
+        .add(collector.toJson());
+  }
+
   factory Collector.fromJson(String id, Map<String, dynamic> data) {
     final name = data['name'];
     final position = data['position'];
