@@ -61,7 +61,7 @@ class Session {
       // Import collectors from previous period
 
       _collectors = collectors
-          .map((e) => Collector(e.id, e.clearCollections().toJson()))
+          .map((e) => Collector.fromJson(e.id, e.clearCollections().toJson()))
           .toList();
 
       for (final collector in collectors) {
@@ -71,7 +71,8 @@ class Session {
             .set(collector.toJson());
       }
     } else {
-      _collectors = data.docs.map((e) => Collector(e.id, e.data())).toList();
+      _collectors =
+          data.docs.map((e) => Collector.fromJson(e.id, e.data())).toList();
     }
 
     _isNext = false;

@@ -21,6 +21,15 @@ class Collector {
     this.daily = daily ?? Collection.template();
   }
 
+  factory Collector.fromJson(String id, Map<String, dynamic> data) {
+    final name = data['name'];
+    final position = data['position'];
+    final monthly = Collection.fromJson('$name (Monthly)', data['monthly']);
+    final daily = Collection.fromJson('$name (Daily)', data['daily']);
+
+    return Collector(id, name, position, monthly: monthly, daily: daily);
+  }
+
   Future<void> updatePosition(int position) async {
     this.position = position;
 
