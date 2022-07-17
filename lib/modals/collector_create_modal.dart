@@ -51,7 +51,7 @@ class CollectorCreateModal extends StatelessWidget {
         ElevatedButton.icon(
           onPressed: () async {
             if (formKey.currentState!.validate()) {
-              final name = nameController.text;
+              final name = nameController.text.trim();
 
               await Collector.create(name);
 
