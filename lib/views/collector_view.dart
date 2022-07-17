@@ -13,6 +13,8 @@ class CollectorView extends StatefulWidget {
 }
 
 class _CollectorViewState extends State<CollectorView> {
+  Future<void> loadSession = Session.load();
+
   @override
   Widget build(BuildContext context) {
     num total = 0;
@@ -25,7 +27,7 @@ class _CollectorViewState extends State<CollectorView> {
         title: Text(Session.period.asTitle()),
       ),
       body: FutureBuilder(
-        future: Session.load(),
+        future: loadSession,
         builder: (context, snapshot) {
           final isDone = snapshot.connectionState == ConnectionState.done;
 
@@ -71,11 +73,11 @@ class _CollectorViewState extends State<CollectorView> {
                             setState(() {
                               final task = collectors.removeAt(oldIndex);
                               collectors.insert(newIndex, task);
+                            });
 
                               for (int i = start; i <= end; i++) {
                                 collectors[i].updatePosition(i);
                               }
-                            });
                           },
                           itemBuilder: (context, index) {
                             final collector = collectors[index];
