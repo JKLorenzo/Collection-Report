@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:collection_report/models/collector.dart';
 import 'package:collection_report/utils/session.dart';
+import 'package:collection_report/views/new_collector_view.dart';
 import 'package:collection_report/views/collection_view.dart';
 import 'package:flutter/material.dart';
 
@@ -22,7 +23,24 @@ class _CollectorViewState extends State<CollectorView> {
 
     return Scaffold(
       appBar: AppBar(
-        actions: const [],
+        actions: [
+          IconButton(
+            onPressed: () async {
+              final result = await Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => const NewCollectorView(),
+                ),
+              );
+
+              if (result == true) {
+                setState(() {
+                  loadSession = Session.load();
+                });
+              }
+            },
+            icon: const Icon(Icons.add),
+          )
+        ],
         centerTitle: true,
         title: Text(Session.period.asTitle()),
       ),
