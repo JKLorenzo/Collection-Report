@@ -16,7 +16,6 @@ class _CollectionViewState extends State<CollectionView> {
 
     return Scaffold(
       appBar: AppBar(
-        actions: [],
         title: Text(collection.name),
         centerTitle: true,
       ),
