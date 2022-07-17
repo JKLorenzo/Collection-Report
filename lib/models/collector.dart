@@ -3,6 +3,8 @@ import 'package:collection_report/models/collection.dart';
 import 'package:collection_report/utils/session.dart';
 import 'package:flutter/material.dart';
 
+const quota = 170000;
+
 class Collector {
   String id;
   String name;
@@ -53,6 +55,24 @@ class Collector {
         .delete();
   }
 
+  String rank() {
+    final collectors = [...Session.collectors];
+    collectors.retainWhere((element) => element.totalCollection() >= quota);
+    collectors
+        .sort((a, b) => a.totalCollection() > b.totalCollection() ? 0 : 1);
+
+    switch (collectors.indexOf(this)) {
+      case 0:
+        return '(1st)';
+      case 1:
+        return '(2nd)';
+      case 2:
+        return '(3rd)';
+      default:
+        return '';
+    }
+  }
+
   Widget cardView(
     BuildContext context, {
     required void Function() onDelete,
@@ -68,12 +88,17 @@ class Collector {
               child: Row(
                 children: [
                   Expanded(
-                    child: Text(
+                    child: Row(
+                      children: [
+                        Text(
                       name,
                       style: const TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
                       ),
+                    ),
+                        if (rank().isNotEmpty) Text(' ${rank()}')
+                      ],
                     ),
                   ),
                   Row(
