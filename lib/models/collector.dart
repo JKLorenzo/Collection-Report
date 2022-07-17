@@ -73,75 +73,55 @@ class Collector {
     }
   }
 
-  Widget cardView(
-    BuildContext context, {
-    required void Function() onDelete,
-  }) {
+  Widget cardView(BuildContext context) {
     return Card(
       elevation: 5,
-      child: Row(
-        children: [
-          const Icon(Icons.person_rounded, size: 90),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.all(5),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Row(
-                      children: [
-                        Text(
-                          name,
-                          style: const TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        if (rank().isNotEmpty) Text(' ${rank()}')
-                      ],
-                    ),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(5, 5, 30, 5),
+        child: Row(
+          children: [
+            const Icon(Icons.person_rounded, size: 80),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(5),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Row(
                         children: [
-                          const Text(
-                            'Total',
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                          const SizedBox(height: 5),
-                          Text('${totalCollection()}'),
-                        ],
-                      ),
-                      PopupMenuButton(
-                        onSelected: (value) {
-                          if (value == 'delete') {
-                            delete();
-                            onDelete();
-                          }
-                        },
-                        itemBuilder: (context) => [
-                          PopupMenuItem(
-                            value: 'delete',
-                            child: Row(
-                              children: const [
-                                Icon(Icons.delete_forever, color: Colors.black),
-                                SizedBox(width: 15),
-                                Text('Delete'),
-                              ],
+                          Text(
+                            name,
+                            style: const TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
                             ),
                           ),
+                          if (rank().isNotEmpty) Text(' ${rank()}')
                         ],
                       ),
-                    ],
-                  ),
-                ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Text(
+                              'Total',
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                            const SizedBox(height: 5),
+                            Text('${totalCollection()}'),
+                          ],
+                        )
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

@@ -1,9 +1,10 @@
 import 'dart:math';
 
+import 'package:collection_report/modals/collector_info_modal.dart';
 import 'package:collection_report/models/collector.dart';
 import 'package:collection_report/utils/session.dart';
 import 'package:collection_report/views/new_collector_view.dart';
-import 'package:collection_report/views/collection_view.dart';
+
 import 'package:flutter/material.dart';
 
 class CollectorView extends StatefulWidget {
@@ -100,36 +101,33 @@ class _CollectorViewState extends State<CollectorView> {
                           },
                           itemBuilder: (context, index) {
                             final collector = collectors[index];
-                            final collection = collector.monthly;
 
                             return GestureDetector(
                               key: ValueKey(collector),
                               onTap: () {
-                                Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                    builder: (context) => CollectionView(
-                                      collection: collection,
-                                    ),
+                                showDialog(
+                                  context: context,
+                                  builder: (_) => CollectorInfoModal(
+                                    collector: collector,
+                                    onDelete: () {
+                                      setState(() {
+                                        collectors.removeAt(index);
+                                      });
+
+                                      final start =
+                                          min(index, collectors.length);
+                                      final end = max(index, collectors.length);
+
+                                      for (int i = start; i < end; i++) {
+                                        collectors[i].updatePosition(i);
+                                      }
+                                    },
                                   ),
                                 );
                               },
                               child: Padding(
                                 padding: const EdgeInsets.all(5),
-                                child: collector.cardView(
-                                  context,
-                                  onDelete: () {
-                                    setState(() {
-                                      collectors.removeAt(index);
-                                    });
-
-                                    final start = min(index, collectors.length);
-                                    final end = max(index, collectors.length);
-
-                                    for (int i = start; i <= end; i++) {
-                                      collectors[i].updatePosition(i);
-                                    }
-                                  },
-                                ),
+                                child: collector.cardView(context),
                               ),
                             );
                           },
