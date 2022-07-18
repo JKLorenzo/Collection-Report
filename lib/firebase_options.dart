@@ -17,10 +17,7 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      throw UnsupportedError(
-        'DefaultFirebaseOptions have not been configured for web - '
-        'you can reconfigure this by running the FlutterFire CLI again.',
-      );
+      return web;
     }
     // ignore: missing_enum_constant_in_switch
     switch (defaultTargetPlatform) {
@@ -40,6 +37,16 @@ class DefaultFirebaseOptions {
     );
   }
 
+  static const FirebaseOptions web = FirebaseOptions(
+    apiKey: 'AIzaSyCM7iDay76EeTbyNG4CP4NI6wt70TQQklc',
+    appId: '1:742720271638:web:8bd6bcd21bf32e16878c37',
+    messagingSenderId: '742720271638',
+    projectId: 'collection-report-jklorenzo',
+    authDomain: 'collection-report-jklorenzo.firebaseapp.com',
+    storageBucket: 'collection-report-jklorenzo.appspot.com',
+    measurementId: 'G-C10G3DT0VB',
+  );
+
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyBSiXY85fSRmJTPOc_CRjFGl8jR7NkfjNQ',
     appId: '1:742720271638:android:0336727f97ad4ac0878c37',
@@ -54,7 +61,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '742720271638',
     projectId: 'collection-report-jklorenzo',
     storageBucket: 'collection-report-jklorenzo.appspot.com',
-    iosClientId: '742720271638-u7o6tigens8gp5u16lkkfd4oc5n83dgc.apps.googleusercontent.com',
+    iosClientId:
+        '742720271638-u7o6tigens8gp5u16lkkfd4oc5n83dgc.apps.googleusercontent.com',
     iosBundleId: 'com.jklorenzo.collectionReport',
   );
 }
